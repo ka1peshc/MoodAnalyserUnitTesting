@@ -9,7 +9,7 @@ namespace MoodAnalyserTesting
 
         public UnitTest1()
         {
-            program = new MoodAnalyser.Program();
+            
         }
         [TestMethod]
         public void TestMethod1()
@@ -17,9 +17,21 @@ namespace MoodAnalyserTesting
             //Arrange
             string msg = "I am in Sad Mood";
             //Action
-            string result = program.moodAnalyser(msg);
+            program = new MoodAnalyser.Program(msg);
+            string result = program.moodAnalyser();
             //Assert
             Assert.AreEqual("SAD", result);
+        }
+        [TestMethod]
+        public void TestMethod2()
+        {
+            //Arrange
+            string msg = "I am in Happy Mood";
+            //Action
+            program = new MoodAnalyser.Program(msg);
+            string result = program.moodAnalyser();
+            //Assert
+            Assert.AreEqual("HAPPY", result);
         }
     }
 }
