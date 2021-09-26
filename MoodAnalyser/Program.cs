@@ -2,6 +2,27 @@
 
 namespace MoodAnalyser
 {
+    public enum errorList
+    {
+        GivenMessageIsEmpty,
+        GivenMessageIsNull
+    }
+    [Serializable]
+    public class EmptyMessage : Exception
+    {
+        public EmptyMessage() : base(errorList.GivenMessageIsEmpty.ToString())
+        {
+
+        }
+    }
+    [Serializable]
+    public class NullMessage : Exception
+    {
+        public NullMessage() : base(errorList.GivenMessageIsNull.ToString())
+        {
+
+        }
+    }
     public class Program
     {
         private string message;
@@ -22,12 +43,10 @@ namespace MoodAnalyser
         
         public string moodAnalyser()
         {
-            //if(this.message == null)
-            //{
-            //    throw new ArgumentNullException(nameof(message));
-            //}
+            
             try
             {
+                ValidateMesssage(this.message);
                 var tempArr = message.ToLower().Split(" ");
                 string result = "";
                 for (int i = 0; i < tempArr.Length; i++)
@@ -49,12 +68,14 @@ namespace MoodAnalyser
                 }
                 return result;
             }
-            catch (NullReferenceException)
+            catch (EmptyMessage em)
             {
+                Console.WriteLine(em.Message);
                 return "Happy";
             }
-            catch (ArgumentNullException)
+            catch (NullMessage nm)
             {
+                Console.WriteLine(nm.Message);
                 return "Happy";
             }
             //}catch (Exception ex)
@@ -64,10 +85,21 @@ namespace MoodAnalyser
             //}
             
         }
+        private static void ValidateMesssage(string msg)
+        {
+            if(msg == null)
+            {
+                throw new NullMessage();
+            }if( msg == "")
+            {
+                throw new EmptyMessage();
+            }
+        }
+
         static void Main()
         {
             Console.WriteLine("Hello World!");
-            Program Moodanalyser = new Program(null);
+            Program Moodanalyser = new Program("");
             string result = Moodanalyser.moodAnalyser();
             Console.WriteLine(result);
         }
