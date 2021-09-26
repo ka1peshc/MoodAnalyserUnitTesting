@@ -4,7 +4,7 @@ namespace MoodAnalyser
 {
     public class Program
     {
-        private readonly string message;
+        private string message;
         /// <summary>
         /// default constructor
         /// </summary>
@@ -22,32 +22,52 @@ namespace MoodAnalyser
         
         public string moodAnalyser()
         {
-            
-            var tempArr = message.ToLower().Split(" ");
-            string result="";
-            for(int i = 0; i < tempArr.Length; i++)
+            //if(this.message == null)
+            //{
+            //    throw new ArgumentNullException(nameof(message));
+            //}
+            try
             {
-                if (tempArr[i].Equals("sad"))
+                var tempArr = message.ToLower().Split(" ");
+                string result = "";
+                for (int i = 0; i < tempArr.Length; i++)
                 {
-                    result = "SAD";
-                    break;
+                    if (tempArr[i].Equals("sad"))
+                    {
+                        result = "SAD";
+                        break;
+                    }
+                    else if (tempArr[i].Equals("happy") || tempArr[i].Equals("any"))
+                    {
+                        result = "HAPPY";
+                        break;
+                    }
+                    else
+                    {
+                        result = null;
+                    }
                 }
-                else if (tempArr[i].Equals("happy") || tempArr[i].Equals("any"))
-                {
-                    result = "HAPPY";
-                    break;
-                }
-                else
-                {
-                    result = null;
-                }
+                return result;
             }
-            return result;
+            catch (NullReferenceException)
+            {
+                return "Happy";
+            }
+            catch (ArgumentNullException)
+            {
+                return "Happy";
+            }
+            //}catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex);
+            //    return;
+            //}
+            
         }
         static void Main()
         {
             Console.WriteLine("Hello World!");
-            Program Moodanalyser = new Program("I am Happy");
+            Program Moodanalyser = new Program(null);
             string result = Moodanalyser.moodAnalyser();
             Console.WriteLine(result);
         }

@@ -1,5 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MoodAnalyser;
+using System;
+
 namespace MoodAnalyserTesting
 {
     [TestClass]
@@ -32,6 +34,18 @@ namespace MoodAnalyserTesting
             string result = program.moodAnalyser();
             //Assert
             Assert.AreEqual("HAPPY", result);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TestMethod3()
+        {
+            string msg = null;
+            program = new MoodAnalyser.Program(msg);
+            string result = program.moodAnalyser();
+            
+            //Assert.AreEqual(null, result);
+            //Assert.IsNotNull(result);
         }
     }
 }
