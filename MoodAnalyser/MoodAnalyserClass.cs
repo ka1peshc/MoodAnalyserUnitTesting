@@ -19,7 +19,7 @@ namespace MoodAnalyser
             {
                 if (this.message.Equals(string.Empty))
                 {
-                    throw new CustomMoodAnalyser(CustomMoodAnalyser.ErrorMessage.Entered_Empty_String, "String is empty");
+                    throw new CustomMoodAnalyser(CustomMoodAnalyser.ExceptionType.Entered_Empty_String, "String is empty");
                 }
                 
                 if(this.message.Contains("Sad"))
@@ -33,7 +33,7 @@ namespace MoodAnalyser
             }
             catch (NullReferenceException)
             {
-                throw new CustomMoodAnalyser(CustomMoodAnalyser.ErrorMessage.Entered_null, "Nothing is entered");
+                throw new CustomMoodAnalyser(CustomMoodAnalyser.ExceptionType.Entered_null, "Nothing is entered");
             }
             
         }
