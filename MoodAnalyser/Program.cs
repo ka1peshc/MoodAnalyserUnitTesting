@@ -42,8 +42,7 @@ namespace MoodAnalyser
         }
         
         public string moodAnalyser()
-        {
-            
+        {   
             try
             {
                 ValidateMesssage(this.message);
@@ -71,12 +70,14 @@ namespace MoodAnalyser
             catch (EmptyMessage em)
             {
                 Console.WriteLine(em.Message);
-                return "Happy";
+                //return "Happy";
+                return em.Message;
             }
             catch (NullMessage nm)
             {
                 Console.WriteLine(nm.Message);
-                return "Happy";
+                //return "Happy";
+                return nm.Message;
             }
             //}catch (Exception ex)
             //{
