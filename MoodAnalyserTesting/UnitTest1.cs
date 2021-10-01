@@ -216,7 +216,45 @@ namespace MoodAnalyserTesting
                 Assert.AreEqual(expected, cma.Message);
             }
         }
+        /// <summary>
+        /// TC 7.1 Given happy should return happy
+        /// </summary>
+        [TestMethod]
+        public void GivenHAPPYmessageWithReflectorShouldReturnHAPPY()
+        {
+            string result = MoodAnalyserReflector.setField("HAPPY", "message");
+            Assert.AreEqual("HAPPY", result);
+        }
 
+        /// <summary>
+        /// TC 7.2 SetField When Improper Should Throw Exception with no such field
+        /// </summary>
+        [TestMethod]
+        public void SetFieldWhenImproperShouldThrowExceptionWithNoSuchField()
+        {
+            string expected = "field is not found";
+            try
+            {
+                string result = MoodAnalyserReflector.setField("HAPPY", "messageFake");
+            }
+            catch (CustomMoodAnalyser cma)
+            {
+                Assert.AreEqual(expected, cma.Message);
+            }
+        }
 
+        [TestMethod]
+        public void SettingNullMessagewithReflectorShouldThrowException()
+        {
+            string expected = "Message should not be null";
+            try
+            {
+                string result = MoodAnalyserReflector.setField(null, "message");
+            }
+            catch (CustomMoodAnalyser cma)
+            {
+                Assert.AreEqual(expected, cma.Message);
+            }
+        }
     }
 }

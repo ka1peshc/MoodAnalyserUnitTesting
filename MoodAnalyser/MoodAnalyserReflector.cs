@@ -8,6 +8,12 @@ namespace MoodAnalyser
 {
     public class MoodAnalyserReflector
     {
+        /// <summary>
+        /// CreateMoodAnalyse method to create object of MoodAnalyserClass
+        /// </summary>
+        /// <param name="className"></param>
+        /// <param name="construtorName"></param>
+        /// <returns></returns>
         public static object CreateMoodAnalyse(string className, string construtorName)
         {
             string pattern = @"." + construtorName + "$";
@@ -60,7 +66,12 @@ namespace MoodAnalyser
                 throw new CustomMoodAnalyser(CustomMoodAnalyser.ExceptionType.No_Such_Class, "Class not found");
             }
         }
-
+        /// <summary>
+        /// Invoke method using reflection 
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="methodName"></param>
+        /// <returns></returns>
         public static string InvokeAnalyseMethod(string msg, string methodName)
         {
             try
@@ -76,6 +87,31 @@ namespace MoodAnalyser
             catch (NullReferenceException)
             {
                 throw new CustomMoodAnalyser(CustomMoodAnalyser.ExceptionType.No_Such_Method, "No such method exists");
+            }
+        }
+        /// <summary>
+        /// Use Reflection to change mood dynamically
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="fieldName"></param>
+        /// <returns></returns>
+        public static string setField(string message, string fieldName)
+        {
+            try
+            {
+                MoodAnalyserClass mac = new MoodAnalyserClass();
+                Type type = typeof(MoodAnalyserClass);
+                FieldInfo field = type.GetField(fieldName, BindingFlags.Public | BindingFlags.Instance);
+                if(message == null)
+                {
+                    throw new CustomMoodAnalyser(CustomMoodAnalyser.ExceptionType.No_Such_Field, "Message should not be null");
+                }
+                field.SetValue(mac, message);
+                return mac.message;
+            }
+            catch (NullReferenceException)
+            {
+                throw new CustomMoodAnalyser(CustomMoodAnalyser.ExceptionType.No_Such_Field, "field is not found");
             }
         }
     }

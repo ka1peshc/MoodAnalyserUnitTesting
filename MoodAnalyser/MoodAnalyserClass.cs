@@ -8,7 +8,7 @@ namespace MoodAnalyser
 {
     public class MoodAnalyserClass
     {
-        private readonly string message;
+        public string message;
         public MoodAnalyserClass()
         {
             

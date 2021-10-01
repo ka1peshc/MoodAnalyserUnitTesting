@@ -12,7 +12,8 @@ namespace MoodAnalyser
             Entered_null,
             Entered_Empty_String,
             No_Such_Class,
-            No_Such_Method
+            No_Such_Method,
+            No_Such_Field
         }
 
         ExceptionType enumtype;
