@@ -111,7 +111,9 @@ namespace MoodAnalyserTesting
             object obj = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass");
             expected.Equals(obj);
         }
-
+        /// <summary>
+        /// TC 4.2 Passing wrong class name and check custom error message
+        /// </summary>
         [TestMethod]
         public void GivenMoodAnalyserClassWrongName_GetException()
         {
@@ -125,7 +127,9 @@ namespace MoodAnalyserTesting
                 Assert.AreEqual(msg, cma.Message);
             }
         }
-
+        /// <summary>
+        /// TC 4.3 Passing wrong constructor name and  checking custom error message
+        /// </summary>
         [TestMethod]
         public void GivenMoodAnalyserClassConstructorWrongName_GetException()
         {
@@ -133,6 +137,52 @@ namespace MoodAnalyserTesting
             try
             {
                 object obj = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClassFake");
+            }
+            catch (CustomMoodAnalyser cma)
+            {
+                Assert.AreEqual(msg, cma.Message);
+            }
+        }
+
+        /// <summary>
+        /// TC 5.1 Given MoodAnalyserClass will give MoodAnalyserClass object
+        /// </summary>
+        [TestMethod]
+        public void GivenMoodAnalyserClassName_ShouldReturnMoodAnalyserObject_UsingParameterizedConstructor()
+        {
+            object expected = new MoodAnalyserClass("HAPPY");
+            object obj = MoodAnalyserFactory.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyser.MoodAnalyserClass",
+                "MoodAnalyserClass", "HAPPY");
+            expected.Equals(obj);
+        }
+        /// <summary>
+        /// TC 5.2 Passing wrong class name and check custom error message
+        /// </summary>
+        [TestMethod]
+        public void GivenMoodAnalyserClassWrongName_ShouldReturnMoodAnalyserExceptionForWrongClass_UsingParameterizedConstructor()
+        {
+            string msg = "Class not found";
+            try
+            {
+                object obj = MoodAnalyserFactory.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyser.MoodAnalyserClassFake",
+                "MoodAnalyserClassFake", "HAPPY");
+            }
+            catch (CustomMoodAnalyser cma)
+            {
+                Assert.AreEqual(msg, cma.Message);
+            }
+        }
+        /// <summary>
+        /// TC 5.3 Passing wrong constructor name and  checking custom error message
+        /// </summary>
+        [TestMethod]
+        public void GivenMoodAnalyserClassWrongName_ShouldReturnMoodAnalyserExceptionForWrongConstructor_UsingParameterizedConstructor()
+        {
+            string msg = "Constructor is not found";
+            try
+            {
+                object obj = MoodAnalyserFactory.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyser.MoodAnalyserClass",
+                "MoodAnalyserClassFake", "HAPPY");
             }
             catch (CustomMoodAnalyser cma)
             {
