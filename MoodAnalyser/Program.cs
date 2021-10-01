@@ -9,10 +9,6 @@ namespace MoodAnalyser
         {
             Console.WriteLine("Hello World!");
             
-            Customer c = new Customer(5, "Kalpesh");
-            c.PrintId();
-            c.PrintName();
-            ReflectionTest.Test();
         }
     }
 }
