@@ -6,11 +6,11 @@ using System.Text.RegularExpressions;
 
 namespace MoodAnalyser
 {
-    public class MoodAnalyserFactory
+    public class MoodAnalyserReflector
     {
         public static object CreateMoodAnalyse(string className, string construtorName)
         {
-            string pattern = @"."+construtorName+"$";
+            string pattern = @"." + construtorName + "$";
             Match result = Regex.Match(className, pattern);
 
             if (result.Success)
@@ -42,7 +42,7 @@ namespace MoodAnalyser
         public static object CreateMoodAnalyseUsingParameterizedConstructor(string className, string constructorName, string message)
         {
             Type type = typeof(MoodAnalyserClass);
-            if(type.Name.Equals(className) || type.FullName.Equals(className))
+            if (type.Name.Equals(className) || type.FullName.Equals(className))
             {
                 if (type.Name.Equals(constructorName))
                 {
@@ -58,6 +58,24 @@ namespace MoodAnalyser
             else
             {
                 throw new CustomMoodAnalyser(CustomMoodAnalyser.ExceptionType.No_Such_Class, "Class not found");
+            }
+        }
+
+        public static string InvokeAnalyseMethod(string msg, string methodName)
+        {
+            try
+            {
+                Type type = Type.GetType("MoodAnalyser.MoodAnalyserClass");
+                object moodAnalyserObject = MoodAnalyserReflector.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyser.MoodAnalyserClass",
+                    "MoodAnalyserClass",msg);
+                MethodInfo analyseMoodInfo = type.GetMethod(methodName);
+                object mood = analyseMoodInfo.Invoke(moodAnalyserObject,null);
+                return mood.ToString();
+
+            }
+            catch (NullReferenceException)
+            {
+                throw new CustomMoodAnalyser(CustomMoodAnalyser.ExceptionType.No_Such_Method, "No such method exists");
             }
         }
     }

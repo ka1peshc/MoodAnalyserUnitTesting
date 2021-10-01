@@ -108,7 +108,7 @@ namespace MoodAnalyserTesting
         {
             string message = null;
             object expected = new MoodAnalyserClass(message);
-            object obj = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass");
+            object obj = MoodAnalyserReflector.CreateMoodAnalyse("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass");
             expected.Equals(obj);
         }
         /// <summary>
@@ -120,7 +120,7 @@ namespace MoodAnalyserTesting
             string msg = "Class not found";
             try
             {
-                object obj = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyser.MoodAnalyserClassFake", "MoodAnalyserClassFake");
+                object obj = MoodAnalyserReflector.CreateMoodAnalyse("MoodAnalyser.MoodAnalyserClassFake", "MoodAnalyserClassFake");
             }
             catch(CustomMoodAnalyser cma)
             {
@@ -136,7 +136,7 @@ namespace MoodAnalyserTesting
             string msg = "Constructor is not found";
             try
             {
-                object obj = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClassFake");
+                object obj = MoodAnalyserReflector.CreateMoodAnalyse("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClassFake");
             }
             catch (CustomMoodAnalyser cma)
             {
@@ -151,7 +151,7 @@ namespace MoodAnalyserTesting
         public void GivenMoodAnalyserClassName_ShouldReturnMoodAnalyserObject_UsingParameterizedConstructor()
         {
             object expected = new MoodAnalyserClass("HAPPY");
-            object obj = MoodAnalyserFactory.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyser.MoodAnalyserClass",
+            object obj = MoodAnalyserReflector.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyser.MoodAnalyserClass",
                 "MoodAnalyserClass", "HAPPY");
             expected.Equals(obj);
         }
@@ -164,7 +164,7 @@ namespace MoodAnalyserTesting
             string msg = "Class not found";
             try
             {
-                object obj = MoodAnalyserFactory.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyser.MoodAnalyserClassFake",
+                object obj = MoodAnalyserReflector.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyser.MoodAnalyserClassFake",
                 "MoodAnalyserClassFake", "HAPPY");
             }
             catch (CustomMoodAnalyser cma)
@@ -181,7 +181,7 @@ namespace MoodAnalyserTesting
             string msg = "Constructor is not found";
             try
             {
-                object obj = MoodAnalyserFactory.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyser.MoodAnalyserClass",
+                object obj = MoodAnalyserReflector.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyser.MoodAnalyserClass",
                 "MoodAnalyserClassFake", "HAPPY");
             }
             catch (CustomMoodAnalyser cma)
@@ -189,5 +189,34 @@ namespace MoodAnalyserTesting
                 Assert.AreEqual(msg, cma.Message);
             }
         }
+        /// <summary>
+        /// TC 6.1 Method Invocation using Reflector
+        /// </summary>
+        [TestMethod]
+        public void GivenHappyShouldReturnHappy()
+        {
+            string expected = "HAPPY";
+            string mood = MoodAnalyserReflector.InvokeAnalyseMethod("Happy", "AnalyseMood");
+            Assert.AreEqual(expected , mood);
+        }
+
+        /// <summary>
+        /// TC 6.2 Given Happy Message When Improper Method Should Throw MoodAnalysisException
+        /// </summary>
+        [TestMethod]
+        public void GivenHappyMessageWhenImproperMethodShouldhrowMoodAnalysisException()
+        {
+            string expected = "No such method exists";
+            try
+            {
+                string mood = MoodAnalyserReflector.InvokeAnalyseMethod("Happy", "AnalyseMoodFake");
+            }
+            catch (CustomMoodAnalyser cma)
+            {
+                Assert.AreEqual(expected, cma.Message);
+            }
+        }
+
+
     }
 }
