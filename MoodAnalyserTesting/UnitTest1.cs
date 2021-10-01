@@ -7,8 +7,6 @@ namespace MoodAnalyserTesting
     [TestClass]
     public class UnitTest1
     {
-        private MoodAnalyser.Program program;
-        //private MoodAnalyser.MoodAnalyser analyser;
         public UnitTest1()
         {
             
@@ -18,9 +16,9 @@ namespace MoodAnalyserTesting
         {
             //Arrange
             string msg = "I am in Sad Mood";
+            MoodAnalyserClass mac = new MoodAnalyserClass(msg);
             //Action
-            program = new MoodAnalyser.Program(msg);
-            string result = program.moodAnalyser();
+            string result = mac.AnalyseMood();
             //Assert
             Assert.AreEqual("SAD", result);
         }
@@ -29,9 +27,9 @@ namespace MoodAnalyserTesting
         {
             //Arrange
             string msg = "I am in Happy Mood";
+            MoodAnalyserClass mac = new MoodAnalyserClass(msg);
             //Action
-            program = new MoodAnalyser.Program(msg);
-            string result = program.moodAnalyser();
+            string result = mac.AnalyseMood();
             //Assert
             Assert.AreEqual("HAPPY", result);
         }
@@ -71,12 +69,17 @@ namespace MoodAnalyserTesting
         {
             try
             {
-                string message = "";
+                //Arrange
+                string message = "I am in happy mood";
                 MoodAnalyserClass mac = new MoodAnalyserClass(message);
+                //Action
                 string result = mac.AnalyseMood();
+                //Act
+                Assert.AreEqual("HAPPY", result);
             }
             catch (CustomMoodAnalyser cma)
             {
+                //Act
                 Assert.AreEqual("String is empty",cma.Message);
             }
         }
@@ -96,6 +99,17 @@ namespace MoodAnalyserTesting
             {
                 Assert.AreEqual("Nothing is entered", cma.Message);
             }
+        }
+        /// <summary>
+        /// Test case 4.1 Given mood analyser class name should return mood analyser object
+        /// </summary>
+        [TestMethod]
+        public void GivenMoodAnalyserClassName_ShouldReturnMoodAnalyserObject()
+        {
+            string message = null;
+            object expected = new MoodAnalyserClass(message);
+            object obj = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass");
+            expected.Equals(obj);
         }
     }
 }
